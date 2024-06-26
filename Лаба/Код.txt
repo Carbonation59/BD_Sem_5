@@ -1,0 +1,184 @@
+
+-- create
+CREATE TABLE Models
+(
+  id_model             INTEGER NOT NULL,
+	name_of_model        CHAR(32) NOT NULL,
+	country              CHAR(32) NULL,
+	body_type            CHAR(32) NULL,
+	name_of_brand        CHAR(32) NOT NULL,
+	year_of_creation     INTEGER NULL
+);
+
+
+
+ALTER TABLE Models
+ADD PRIMARY KEY (id_model);
+
+
+
+CREATE TABLE Salons_of_cars
+(
+  id_salon             INTEGER NOT NULL PRIMARY KEY,
+	city                 CHAR(32) NULL,
+	country              CHAR(32) NULL,
+	name_of_brand        CHAR(32) NOT NULL,
+	call_number          CHAR(20) NULL,
+	name_of_salon        CHAR(32) NOT NULL
+);
+
+CREATE TABLE List
+(
+  id_car               INTEGER NOT NULL,
+	id_model             INTEGER NOT NULL REFERENCES Models (id_model),
+	id_salon             INTEGER NOT NULL REFERENCES Salons_of_cars (id_salon),
+	year_of_production   INTEGER NULL,
+	mileage              INTEGER NULL,
+	serial_number_of_car CHAR(20) NOT NULL
+);
+
+
+
+ALTER TABLE List
+ADD PRIMARY KEY (id_car);
+
+-- insert
+
+INSERT INTO Models VALUES (1, 'Camry', 'Japan', 'Sedan', 'Toyota', 2015);
+INSERT INTO Models VALUES (2, 'Golf', NULL, NULL, 'Volkswagen', NULL);
+INSERT INTO Models VALUES (3, 'Kalina', 'Russia', 'NULL', 'Lada', 2001);
+INSERT INTO Models VALUES (4, 'Logan', NULL, 'Minivan', 'Renault', 2004);
+INSERT INTO Models VALUES (5, 'Polo', 'Germany', 'Sedan', 'Volkswagen', NULL);
+INSERT INTO Models VALUES (6, 'X-Trail', 'Japan', 'SUV', 'Nissan', 2007);
+INSERT INTO Models VALUES (7, 'Priora', NULL, NULL, 'Lada', 2010);
+INSERT INTO Models VALUES (8, 'Qashqai', 'Japan', 'Crossover', 'Nissan', 2021);
+INSERT INTO Models VALUES (9, 'Corolla', 'NULL', 'Subcompact', 'Toyota', 2018);
+INSERT INTO Models VALUES (10, 'Sandero', 'France', NULL, 'Renault', 2012);
+INSERT INTO Models VALUES (11, 'Granta', 'Russia', 'Station wagon', 'Lada', NULL);
+
+INSERT INTO Salons_of_cars VALUES (1, 'Nur-sultan', 'Kazakhstan', 'Lada', '77172954146', 'Interkom-auto');
+INSERT INTO Salons_of_cars VALUES (2, NULL, NULL, 'Toyota', NULL, 'ROLF');
+INSERT INTO Salons_of_cars VALUES (3, 'Kishinev', 'Moldovia', 'Renault', '37322205888', 'DAAC Hermes');
+INSERT INTO Salons_of_cars VALUES (4, 'Kair', 'Egypt', 'Lada', '2022581847', 'Al Amal');
+INSERT INTO Salons_of_cars VALUES (5, NULL, NULL, 'Renault', '7367893', 'City Motors');
+INSERT INTO Salons_of_cars VALUES (6, 'Кostov-on-don', 'Russia', 'Nissan', '88633092385', 'Carkey');
+INSERT INTO Salons_of_cars VALUES (7, 'Saint-Petersburg', NULL, 'Volksvagen', '89681962732', 'Maximum');
+INSERT INTO Salons_of_cars VALUES (8, 'Minsk', 'Belarus', 'Volksvagen', NULL, 'Atlant-M');
+INSERT INTO Salons_of_cars VALUES (9, NULL, 'Russia', 'Nissan', NULL, 'Automir');
+INSERT INTO Salons_of_cars VALUES (10, 'La Habana', 'Cuba', 'Lada', '5372040502', 'Ivecta');
+
+INSERT INTO List VALUES (1, 1, 2, 2018, 60000, 'WBAZZZ8A9KA123456');
+INSERT INTO List VALUES (2, 1, 2, NULL, NULL, '1FTSW2BR5AEA71651');
+INSERT INTO List VALUES (3, 9, 2, 2020, 43000, 'PALDKF6Q2VG951753');
+INSERT INTO List VALUES (4, 2, 7, 2015, 127000, 'VBNCMX8F5SD612384');
+INSERT INTO List VALUES (5, 5, 7, 2019, 35000, 'BHVGCF5P1AQ879456');
+INSERT INTO List VALUES (6, 2, 7, NULL, 78000, 'QAPLKO4M6VL159478');
+INSERT INTO List VALUES (7, 2, 7, 2013, 234000, '2CNDL23F776079300');
+INSERT INTO List VALUES (8, 3, 1, 2003, 635000, '1J4FA39S96P724681');
+INSERT INTO List VALUES (9, 7, 1, NULL, 365000, '1HD1FHR19WY603454');
+INSERT INTO List VALUES (10, 7, 1, 2012, 534000, '2T3WFREV5FW197429');
+INSERT INTO List VALUES (11, 11, 4, 2015, NULL, '5TDDK3DC4DS065857');
+INSERT INTO List VALUES (12, 7, 10, 2010, 450000, '1ZVHT82H985252370');
+INSERT INTO List VALUES (13, 11, 10, 2013, 298000, '3MEHM08Z28R698213');
+INSERT INTO List VALUES (14, 3, 10, 2002, 865000, '1GKKVTKD9EJ178135');
+INSERT INTO List VALUES (15, 11, 10, NULL, NULL, 'KNDJF723067202467');
+INSERT INTO List VALUES (16, 4, 3, 2005, 900000, 'JT8GK13TXS0100161');
+INSERT INTO List VALUES (17, 4, 3, 2010, 580000, '2HGES26795H673258');
+INSERT INTO List VALUES (18, 10, 3, 2015, 235000, '1D8HB58N08F167916');
+INSERT INTO List VALUES (19, 10, 3, NULL, 212000, '2D8FV47T38H132861');
+INSERT INTO List VALUES (20, 4, 5, 2007, 739000, '5TEWM72N71Z720302');
+INSERT INTO List VALUES (21, 6, 6, 2009, 888000, '5FNYF28717B002950');
+INSERT INTO List VALUES (22, 6, 6, 2008, 965000, 'JHMGD38607S011770');
+INSERT INTO List VALUES (23, 8, 6, 2022, 12000, '1D4GP45RX6B572542');
+INSERT INTO List VALUES (24, 6, 9, 2009, 989000, '1G8AJ55F36Z176244');
+INSERT INTO List VALUES (25, 8, 9, 2022, 21000, 'WBAEH73415B126589');
+
+--fetch
+
+SELECT * FROM Models;
+SELECT * FROM Salons_of_cars;
+SELECT * FROM List;
+SELECT '' AS "1";
+SELECT country, name_of_salon FROM Salons_of_cars where (country = 'Russia') OR (country = 'Belarus');
+SELECT '' AS "2";
+SELECT name_of_brand, name_of_model FROM Models where NOT (name_of_brand = 'Lada');
+SELECT '' AS "3";
+SELECT country, city FROM Salons_of_cars where country IN ('Kazakhstan', 'Moldovia', 'Egypt');
+SELECT '' AS "4";
+SELECT year_of_production, serial_number_of_car FROM List where year_of_production BETWEEN 2020 AND 2022;
+SELECT '' AS "5";
+SELECT name_of_model, body_type FROM Models where body_type  LIKE '_e%';  -- '_' - обязательно один символ, % - 0 и более символов
+SELECT '' AS "6";
+SELECT MIN(year_of_creation) AS minimal_year_of_creation FROM Models;
+SELECT '' AS "7";
+SELECT COUNT(country) AS Japan_models FROM Models WHERE country = 'Japan';
+SELECT '' AS "8";
+SELECT MAX(year_of_creation), country FROM Models GROUP BY country; -- вначале группируем всевозможны значения колонки country
+SELECT '' AS "9";
+SELECT COUNT(name_of_model), country FROM Models GROUP BY country;
+SELECT '' AS "10";
+SELECT COUNT(name_of_model), country FROM Models GROUP BY country HAVING (COUNT(name_of_model) >= 3);
+SELECT '' AS "11";
+SELECT body_type, year_of_creation FROM Models WHERE (body_type LIKE 'S%n%') ORDER BY year_of_creation ; -- сортирует по указанному значению
+SELECT '' AS "12";
+SELECT id_car, year_of_production, mileage  FROM List WHERE (year_of_production > 2015) ORDER BY mileage DESC;
+SELECT '' AS "13";
+SELECT List.id_salon, call_number, mileage, to_number(call_number, '99999999999999999999') + mileage AS some_numbers FROM List JOIN Salons_of_cars ON List.id_salon = Salons_of_cars.id_salon; -- джоинит две таблицы по указанному значению и проводит соответствия
+SELECT '' AS "14";
+SELECT id_model, id_salon,  to_char(id_model, 'FM99') || to_char(id_salon, 'FM99') AS result FROM List; -- FM - режим заполнения (подавляет завершающие нули и дополнение пробелами)
+SELECT '' AS "15";
+SELECT L.id_car, name_of_model,  name_of_salon, S.country AS salon_country, mileage 
+      FROM List L JOIN Salons_of_cars S ON L.id_salon = S.id_salon 
+      JOIN Models M ON L.id_model = M.id_model
+      where (S.country = 'Russia');
+SELECT '' AS "16";
+SELECT a.id_model, b.id_model, a.country, b.country FROM Models a JOIN Models b ON a.country = b.country AND (a.id_model <> b.id_model); -- сопоставляет каждой модели другие модели, из это же страны
+SELECT '' AS "17";
+SELECT * FROM List WHERE year_of_production = (SELECT MAX(year_of_production) FROM List);
+SELECT '' AS "18";
+SELECT * FROM Models, (SELECT FLOOR(AVG(year_of_production)) AS result FROM List WHERE id_salon > 5) a WHERE Models.year_of_creation <= a.result; -- больше среднего значения 
+SELECT '' AS "19";
+SELECT (SELECT name_of_brand FROM Models WHERE List.id_model = Models.id_model) AS brand, 
+      (SELECT name_of_model FROM Models WHERE List.id_model = Models.id_model) AS model, 
+      mileage FROM List;
+SELECT '' AS "20";
+SELECT name_of_brand, name_of_model, year_of_creation,
+      (SELECT FLOOR(AVG(year_of_creation)) FROM Models AS a WHERE a.name_of_brand = b.name_of_brand)
+      FROM Models AS b 
+      WHERE year_of_creation > (SELECT AVG(year_of_creation) FROM Models AS a WHERE a.name_of_brand = b.name_of_brand);
+SELECT '' AS "21";
+SELECT S.name_of_salon, S.id_salon
+      FROM Salons_of_cars S
+      WHERE EXISTS (SELECT 1 FROM List L WHERE S.id_salon = L.id_salon);
+SELECT '' AS "22";
+SELECT M.name_of_brand, M.name_of_model, M.year_of_creation
+      FROM Models M
+      WHERE EXISTS (SELECT 1 FROM List L WHERE L.year_of_production = M.year_of_creation AND M.id_model = L.id_model);
+SELECT '' AS "23";
+SELECT id_model, name_of_brand, country FROM Models WHERE country = ANY (SELECT country FROM Salons_of_cars); 
+SELECT '' AS "24";
+SELECT id_car, mileage, serial_number_of_car FROM List 
+      WHERE mileage > SOME (SELECT mileage FROM List WHERE id_model = 3); -- any и some: условие выполняется хотя бы для одного из списка
+SELECT '' AS "25";
+SELECT id_car, year_of_production, serial_number_of_car FROM List 
+      WHERE year_of_production > ALL (SELECT year_of_creation FROM Models); -- условие должно выполняться для всех из списка
+SELECT '' AS "26";
+SELECT country FROM Models UNION SELECT country FROM Salons_of_cars ORDER BY country;
+SELECT '' AS "27";
+SELECT id_car, year_of_production, mileage * 1.5 AS bad_points FROM List WHERE year_of_production < 2010
+      UNION SELECT id_car, year_of_production, mileage * 0.8 AS bad_points FROM List WHERE year_of_production > 2018 ORDER BY bad_points; -- объединяем результаты в одну таблицу
+SELECT '' AS "28";
+SELECT name_of_brand || ' ' || name_of_model AS cars, year_of_creation FROM Models WHERE year_of_creation < 2015
+      INTERSECT SELECT name_of_brand || ' ' || name_of_model AS cars, year_of_creation FROM Models WHERE year_of_creation > 2007; -- ищет пересечение множест и выводит ТОЛЬКО их
+SELECT '' AS "29";
+SELECT name_of_brand || ' ' || name_of_model AS cars, year_of_creation FROM Models WHERE year_of_creation < 2015
+      EXCEPT SELECT name_of_brand || ' ' || name_of_model AS cars, year_of_creation FROM Models WHERE year_of_creation > 2007; -- выводит дополнение второго множества с помощью первого
+SELECT '' AS "30";
+SELECT country FROM Salons_of_cars EXCEPT SELECT country FROM Models;
+SELECT '' AS "31";
+UPDATE Salons_of_cars SET call_number = '+' || call_number WHERE country = 'Russia';
+SELECT call_number, country FROM Salons_of_cars;
+SELECT '' AS "32";
+SELECT id_car, mileage FROM List;
+UPDATE List SET mileage = mileage - mileage * 0.1 WHERE mileage > (SELECT AVG(mileage) FROM List);
+SELECT id_car, mileage FROM List; -- всё, что дальше восьмого

@@ -1,0 +1,322 @@
+-- create
+CREATE TABLE Body_types
+(
+  id_body_type          INTEGER NOT NULL PRIMARY KEY,
+	name_of_body_type     CHAR(32) NOT NULL,
+	number_of_doors       INTEGER NULL,
+	number_of_seats       INTEGER NOT NULL,
+	roof                  BOOL NULL,
+	trunk                 BOOL NOT NULL
+);
+
+CREATE TABLE Models
+(
+  id_model             INTEGER NOT NULL PRIMARY KEY,
+	name_of_model        CHAR(32) NOT NULL,
+	country              CHAR(32) NULL,
+	id_body_type         INTEGER NULL REFERENCES Body_types (id_body_type),
+	name_of_brand        CHAR(32) NOT NULL,
+	year_of_creation     INTEGER NULL
+);
+
+CREATE TABLE Salons_of_cars
+(
+  id_salon             INTEGER NOT NULL PRIMARY KEY,
+	city                 CHAR(32) NULL,
+	country              CHAR(32) NULL,
+	name_of_brand        CHAR(32) NOT NULL,
+	call_number          CHAR(20) NULL,
+	name_of_salon        CHAR(32) NOT NULL
+);
+
+CREATE TABLE Owners
+(
+  id_owner             INTEGER NOT NULL PRIMARY KEY,
+	name                 CHAR(32) NOT NULL,
+	surname              CHAR(32) NOT NULL,
+	age                  INTEGER NULL,
+	gender               CHAR(8) NOT NULL,
+	driving_experience   INTEGER NULL
+);
+
+CREATE TABLE List
+(
+  id_car               INTEGER NOT NULL PRIMARY KEY,
+	id_model             INTEGER NOT NULL REFERENCES Models (id_model),
+	id_salon             INTEGER NOT NULL REFERENCES Salons_of_cars (id_salon),
+	id_owner             INTEGER NOT NULL REFERENCES Owners (id_owner),
+	year_of_production   INTEGER NULL,
+	mileage              INTEGER NULL,
+	serial_number_of_car CHAR(20) NOT NULL
+);
+
+CREATE TABLE Engines
+(
+  id_engine             INTEGER NOT NULL PRIMARY KEY,
+	name_of_engine        CHAR(32) NOT NULL,
+	fuel_consumption      FLOAT NULL,
+	volume                FLOAT NOT NULL,
+	number_of_cylinders   INTEGER NULL,
+	number_of_horsepower  INTEGER NOT NULL
+);
+
+CREATE TABLE Install
+(
+  id                    INTEGER NOT NULL PRIMARY KEY,
+	id_model              INTEGER NOT NULL REFERENCES Models (id_model),
+	id_engine             INTEGER NOT NULL REFERENCES Engines (id_engine)
+);
+
+-- insert
+
+INSERT INTO Body_types VALUES (1, 'Sedan', 5, 5, TRUE, TRUE);
+INSERT INTO Body_types VALUES (2, 'Minivan', NULL, 7, NULL, TRUE);
+INSERT INTO Body_types VALUES (3, 'SUV', 4, 5, TRUE, TRUE);
+INSERT INTO Body_types VALUES (4, 'Crossover', 4, 5, TRUE, TRUE);
+INSERT INTO Body_types VALUES (5, 'Subcompact', 2, 5, TRUE, TRUE);
+INSERT INTO Body_types VALUES (6, 'Station wagon', 2, 5, TRUE, TRUE);
+INSERT INTO Body_types VALUES (7, 'Сabriolet', 4, 5, NULL, TRUE);
+INSERT INTO Body_types VALUES (8, 'Coupe', NULL, 2, NULL, TRUE);
+INSERT INTO Body_types VALUES (9, 'Hatchback', 3, 2, TRUE, TRUE);
+INSERT INTO Body_types VALUES (10, 'Pickup', 2, 2, TRUE, FALSE);
+
+INSERT INTO Models VALUES (1, 'Camry', 'Japan', 1, 'Toyota', 2015);
+INSERT INTO Models VALUES (2, 'Golf', NULL, NULL, 'Volkswagen', NULL);
+INSERT INTO Models VALUES (3, 'Kalina', 'Russia', NULL, 'Lada', 2001);
+INSERT INTO Models VALUES (4, 'Logan', NULL, 2, 'Renault', 2004);
+INSERT INTO Models VALUES (5, 'Polo', 'Germany', 1, 'Volkswagen', NULL);
+INSERT INTO Models VALUES (6, 'X-Trail', 'Japan', 3, 'Nissan', 2007);
+INSERT INTO Models VALUES (7, 'Priora', NULL, NULL, 'Lada', 2010);
+INSERT INTO Models VALUES (8, 'Qashqai', 'Japan', 4, 'Nissan', 2021);
+INSERT INTO Models VALUES (9, 'Corolla', NULL, 5, 'Toyota', 2018);
+INSERT INTO Models VALUES (10, 'Sandero', 'France', NULL, 'Renault', 2012);
+INSERT INTO Models VALUES (11, 'Granta', 'Russia', 6, 'Lada', NULL);
+
+INSERT INTO Salons_of_cars VALUES (1, 'Nur-sultan', 'Kazakhstan', 'Lada', '77172954146', 'Interkom-auto');
+INSERT INTO Salons_of_cars VALUES (2, NULL, NULL, 'Toyota', NULL, 'ROLF');
+INSERT INTO Salons_of_cars VALUES (3, 'Kishinev', 'Moldovia', 'Renault', '37322205888', 'DAAC Hermes');
+INSERT INTO Salons_of_cars VALUES (4, 'Kair', 'Egypt', 'Lada', '2022581847', 'Al Amal');
+INSERT INTO Salons_of_cars VALUES (5, NULL, NULL, 'Renault', '7367893', 'City Motors');
+INSERT INTO Salons_of_cars VALUES (6, 'Кostov-on-don', 'Russia', 'Nissan', '88633092385', 'Carkey');
+INSERT INTO Salons_of_cars VALUES (7, 'Saint-Petersburg', NULL, 'Volksvagen', '89681962732', 'Maximum');
+INSERT INTO Salons_of_cars VALUES (8, 'Minsk', 'Belarus', 'Volksvagen', NULL, 'Atlant-M');
+INSERT INTO Salons_of_cars VALUES (9, NULL, 'Russia', 'Nissan', NULL, 'Automir');
+INSERT INTO Salons_of_cars VALUES (10, 'La Habana', 'Cuba', 'Lada', '5372040502', 'Ivecta');
+
+INSERT INTO OWNERS VALUES (1, 'Petr', 'Ivanov', 23, 'male', 4);
+INSERT INTO OWNERS VALUES (2, 'Elizaveta', 'Popova', NULL, 'female', NULL);
+INSERT INTO OWNERS VALUES (3, 'Diana', 'Lapteva', 30, 'female', 6);
+INSERT INTO OWNERS VALUES (4, 'Maxim', 'Krylov', NULL, 'male', 20);
+INSERT INTO OWNERS VALUES (5, 'Bogdan', 'Dementev', 27, 'male', NULL);
+INSERT INTO OWNERS VALUES (6, 'Nikita', 'Grekov', NULL, 'male', NULL);
+INSERT INTO OWNERS VALUES (7, 'Anna', 'Voronina', 40, 'female', 13);
+INSERT INTO OWNERS VALUES (8, 'Sophia', 'Leonova', 21, 'female', 1);
+INSERT INTO OWNERS VALUES (9, 'Arina', 'Novikova', 24, 'female', 5);
+INSERT INTO OWNERS VALUES (10, 'Ivan', 'Biryakov', 42, 'male', 17);
+
+INSERT INTO List VALUES (1, 1, 2, 7, 2018, 60000, 'WBAZZZ8A9KA123456');
+INSERT INTO List VALUES (2, 1, 2, 4, NULL, NULL, '1FTSW2BR5AEA71651');
+INSERT INTO List VALUES (3, 9, 2, 1, 2020, 43000, 'PALDKF6Q2VG951753');
+INSERT INTO List VALUES (4, 2, 7, 3, 2015, 127000, 'VBNCMX8F5SD612384');
+INSERT INTO List VALUES (5, 5, 7, 5, 2019, 35000, 'BHVGCF5P1AQ879456');
+INSERT INTO List VALUES (6, 2, 7, 7, NULL, 78000, 'QAPLKO4M6VL159478');
+INSERT INTO List VALUES (7, 2, 7, 9, 2013, 234000, '2CNDL23F776079300');
+INSERT INTO List VALUES (8, 3, 1, 1, 2003, 635000, '1J4FA39S96P724681');
+INSERT INTO List VALUES (9, 7, 1, 1, NULL, 365000, '1HD1FHR19WY603454');
+INSERT INTO List VALUES (10, 7, 1, 10, 2012, 534000, '2T3WFREV5FW197429');
+INSERT INTO List VALUES (11, 11, 4, 8, 2015, NULL, '5TDDK3DC4DS065857');
+INSERT INTO List VALUES (12, 7, 10, 8, 2010, 450000, '1ZVHT82H985252370');
+INSERT INTO List VALUES (13, 11, 10, 6, 2013, 298000, '3MEHM08Z28R698213');
+INSERT INTO List VALUES (14, 3, 10, 4, 2002, 865000, '1GKKVTKD9EJ178135');
+INSERT INTO List VALUES (15, 11, 10, 2, NULL, NULL, 'KNDJF723067202467');
+INSERT INTO List VALUES (16, 4, 3, 2, 2005, 900000, 'JT8GK13TXS0100161');
+INSERT INTO List VALUES (17, 4, 3, 1, 2010, 580000, '2HGES26795H673258');
+INSERT INTO List VALUES (18, 10, 3, 2, 2015, 235000, '1D8HB58N08F167916');
+INSERT INTO List VALUES (19, 10, 3, 3, NULL, 212000, '2D8FV47T38H132861');
+INSERT INTO List VALUES (20, 4, 5, 4, 2007, 739000, '5TEWM72N71Z720302');
+INSERT INTO List VALUES (21, 6, 6, 5, 2009, 888000, '5FNYF28717B002950');
+INSERT INTO List VALUES (22, 6, 6, 8, 2008, 965000, 'JHMGD38607S011770');
+INSERT INTO List VALUES (23, 8, 6, 5, 2022, 12000, '1D4GP45RX6B572542');
+INSERT INTO List VALUES (24, 6, 9, 6, 2009, 989000, '1G8AJ55F36Z176244');
+INSERT INTO List VALUES (25, 8, 9, 2, 2022, 21000, 'WBAEH73415B126589');
+
+INSERT INTO Engines VALUES (1, 'VAZ-21179', 7.9, 1.774, 4, 122);
+INSERT INTO Engines VALUES (2, 'H4Mk', NULL, 1.598, NULL, 113);
+INSERT INTO Engines VALUES (3, 'VAZ-2123', 10.9, 1.69, 4, 80);
+INSERT INTO Engines VALUES (4, 'CDDA, CLPA, CGGB', 5.9, 1.39, 4, 85);
+INSERT INTO Engines VALUES (5, 'CFV', 6.4, 1.598, NULL, 90);
+INSERT INTO Engines VALUES (6, 'CZCA', 6.8, 1.395, 4, 125);
+INSERT INTO Engines VALUES (7, 'R9M', NULL, 1.598, 4, 165);
+INSERT INTO Engines VALUES (8, 'MR20DD', 8.5, 1.997, 4, 150);
+INSERT INTO Engines VALUES (9, 'QR25DE', NULL, 2.488, NULL, 200);
+INSERT INTO Engines VALUES (10, '2GR-FKS', 13.8, 3.456, 6, 318);
+
+INSERT INTO Install VALUES (1, 1, 1);
+INSERT INTO Install VALUES (2, 1, 2);
+INSERT INTO Install VALUES (3, 1, 3);
+INSERT INTO Install VALUES (4, 2, 1);
+INSERT INTO Install VALUES (5, 2, 4);
+INSERT INTO Install VALUES (6, 3, 1);
+INSERT INTO Install VALUES (7, 3, 4);
+INSERT INTO Install VALUES (8, 3, 5);
+INSERT INTO Install VALUES (9, 4, 1);
+INSERT INTO Install VALUES (10, 4, 7);
+INSERT INTO Install VALUES (11, 5, 8);
+INSERT INTO Install VALUES (12, 5, 10);
+INSERT INTO Install VALUES (13, 5, 9);
+INSERT INTO Install VALUES (14, 6, 10);
+INSERT INTO Install VALUES (15, 6, 7);
+INSERT INTO Install VALUES (16, 6, 10);
+INSERT INTO Install VALUES (17, 9, 5);
+INSERT INTO Install VALUES (18, 9, 4);
+INSERT INTO Install VALUES (19, 7, 7);
+INSERT INTO Install VALUES (20, 8, 7);
+
+--fetch
+
+SELECT * FROM Body_types;
+SELECT * FROM Models;
+SELECT * FROM Salons_of_cars;
+SELECT * FROM List;
+SELECT * FROM Engines;
+SELECT * FROM Install;
+SELECT * FROM Owners;
+SELECT '' AS "1";
+SELECT name_of_model, name_of_body_type, year_of_creation 
+      FROM (SELECT * FROM Models WHERE year_of_creation >= 2012) a 
+      LEFT JOIN Body_Types b ON a.id_body_type = b.id_body_type;      -- вывести все модели и их тип кузова (при наличии), которые были выпущены позже 2011 года включительно
+SELECT '' AS "2";
+SELECT name_of_body_type, name_of_model, number_of_seats 
+      FROM Models a RIGHT JOIN 
+      (SELECT * FROM Body_Types WHERE number_of_doors > 3) b ON a.id_body_type = b.id_body_type; -- вывести все типы кузовов и модели, соответствующие им (при наличч), у которых больше трёх дверей
+SELECT '' AS "3";
+SELECT name, driving_experience, name_of_model, year_of_creation FROM Models CROSS JOIN Owners
+      WHERE (driving_experience > 10 AND year_of_creation <= 2022 - driving_experience);        -- вывести, на каких машинах из базы данных могли ездить владельцы, чей стаж больше 10 лет, как только они получили права
+SELECT '' AS "4";
+SELECT name_of_model, name_of_engine FROM (SELECT name_of_model, name_of_engine FROM Install a  
+      FULL JOIN Engines b ON a.id_engine = b.id_engine 
+      FULL JOIN Models c ON a.id_model = c.id_model) g
+      WHERE (name_of_model IS NULL OR name_of_engine IS NULL);                                  -- вывести автомобили, на которые мы не сможем поставить двигатели из базы, и двигатели, которые мы не сможем поставить ни на одну модель из базы
+SELECT '' AS "5";
+SELECT name, driving_experience, 
+      CASE
+        WHEN driving_experience <= 5 THEN 'Junior'
+        WHEN (driving_experience <= 15 AND driving_experience > 5) THEN 'Middle'
+        WHEN driving_experience > 15 THEN 'Senior'
+        ELSE 'None'
+      end
+    FROM Owners;                                                                     -- вывести статусы водителей по их опыту вождения
+SELECT '' AS "6";    
+SELECT name || ' ' || surname as name,
+      CASE
+        WHEN gender = 'female' THEN 'She has ' || name_of_brand || ' ' || name_of_model 
+        WHEN gender = 'male' THEN 'He has ' || name_of_brand || ' ' || name_of_model 
+        ELSE 'ERROR'
+      end
+    FROM List a JOIN Owners b ON a.id_owner = b.id_owner JOIN Models c ON c.id_model = a.id_model; -- вывести имена владельцев их те автомобили, кStatioоторыми они владеют (склонить предложение, учитывая пол)
+SELECT '' AS "7";  
+SELECT serial_number_of_car, name_of_body_type, number_of_doors, number_of_seats, mileage
+    FROM List a JOIN Models b ON a.id_model = b.id_model JOIN Body_Types c ON c.id_body_type = b.id_body_type;
+SELECT name_of_body_type, number_of_doors, number_of_seats, sum(mileage), GROUPING(name_of_body_type,number_of_doors, number_of_seats)
+    FROM List a JOIN Models b ON a.id_model = b.id_model JOIN Body_Types c ON c.id_body_type = b.id_body_type 
+    GROUP BY GROUPING SETS ((name_of_body_type), (number_of_doors, number_of_seats));                                                  -- вывести сумму пробегов для всех машин одного типа и для всех машин, кол-во дверей и сидений в которых совпадает
+    -- А также столбец grouping, которое содержит битовую маску, в которой 1 на позиции i означает элемент на позиции i из указанного списка, не учавствующий в группировке  
+SELECT '' AS "8";  
+SELECT number_of_doors, name_of_body_type, year_of_production
+    FROM List a JOIN Models b ON a.id_model = b.id_model JOIN Body_Types c ON c.id_body_type = b.id_body_type;
+SELECT number_of_doors, name_of_body_type, count(year_of_production), GROUPING(number_of_doors, name_of_body_type)
+    FROM List a JOIN Models b ON a.id_model = b.id_model JOIN Body_Types c ON c.id_body_type = b.id_body_type 
+    GROUP BY ROLLUP(number_of_doors, name_of_body_type); 
+    -- тоже самое, что и GROUPING SETS ((number_of_doors, name_of_body_type), (number_of_doors), ())
+SELECT '' AS "9";  
+SELECT serial_number_of_car, name_of_body_type, number_of_doors, number_of_seats, year_of_production
+    FROM List a JOIN Models b ON a.id_model = b.id_model JOIN Body_Types c ON c.id_body_type = b.id_body_type;
+SELECT name_of_body_type, number_of_doors, number_of_seats, min(year_of_production), 
+    GROUPING(name_of_body_type, number_of_doors, number_of_seats)
+    FROM List a JOIN Models b ON a.id_model = b.id_model JOIN Body_Types c ON c.id_body_type = b.id_body_type 
+    GROUP BY CUBE (name_of_body_type, (number_of_doors, number_of_seats)); 
+    -- тоже самое, что и GROUPING SETS ((name_of_body_type, number_of_doors, number_of_seats), (number_of_doors, number_of_seats),(name_of_body_type), ())
+SELECT '' AS "10";   
+--procedure обмен машинами
+
+CREATE PROCEDURE Swap(serial_number1 CHAR(20), serial_number2 CHAR(20))
+AS $$
+DECLARE
+    id_owner1 integer := 0;
+    id_owner2 integer := 0;
+BEGIN
+    id_owner1 := (SELECT id_owner FROM List WHERE serial_number_of_car = serial_number1);
+    id_owner2 := (SELECT id_owner FROM List WHERE serial_number_of_car = serial_number2);
+    IF id_owner1 is NULL OR id_owner2 is NULL THEN
+        RAISE DEBUG 'Incorrect values';
+        RETURN;
+    ELSEIF id_owner1 = id_owner2 THEN
+        RAISE DEBUG 'Same owners';
+        RETURN;
+    END IF;
+    UPDATE List SET id_owner = id_owner2 WHERE serial_number_of_car = serial_number1;
+    UPDATE List SET id_owner = id_owner1 WHERE serial_number_of_car = serial_number2;
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT id_owner, serial_number_of_car FROM List;
+CALL Swap('WBAZZZ8A9KA123456', '3MEHM08Z28R698213');
+SELECT id_owner, serial_number_of_car FROM List;
+
+SELECT '' AS "11";   
+--function самый частый тип машины у владельца
+
+CREATE FUNCTION Find(Name1 CHAR(32)) RETURNS CHAR(32)
+AS $$
+DECLARE
+  id_owner1 integer;
+  ans CHAR(32);
+BEGIN
+    IF (SELECT COUNT(id_owner) FROM Owners WHERE name = Name1) = 0 THEN 
+        RETURN 'No such owner in base';
+    END IF;
+    id_owner1 = (SELECT id_owner FROM  Owners WHERE name = Name1);
+    IF (SELECT COUNT(id_owner) FROM List WHERE id_owner = id_owner1) = 0 THEN 
+        RETURN 'This owner have no cars in base';
+    END IF;
+    ans := (SELECT e.name_of_body_type FROM 
+      (SELECT COUNT(name_of_body_type), name_of_body_type  FROM List a 
+          JOIN Owners b ON a.id_owner = b.id_owner 
+          JOIN Models c ON  a.id_model = c.id_model
+          JOIN Body_Types d ON c.id_body_type = d.id_body_type 
+          WHERE b.name = Name1
+          GROUP BY name_of_body_type) e ORDER BY e.count LIMIT 1);
+    IF ans IS NULL THEN
+        RETURN 'No information for this body type';
+    END IF;
+    RETURN ans;
+END;
+$$ LANGUAGE plpgsql;
+
+
+SELECT Find('Petr');
+SELECT Find('Ivan');
+SELECT Find('Grigorii');
+
+SELECT '' AS "12";   
+--trigger обновление стажа перед обновлением лет
+
+CREATE FUNCTION change_driving_experience() RETURNS trigger 
+AS $$
+BEGIN
+    IF OLD.age IS NOT NULL AND OLD.driving_experience IS NOT NULL THEN
+      UPDATE Owners SET driving_experience = driving_experience + NEW.age - OLD.age
+      WHERE id_owner = OLD.id_owner;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_driving_experience
+    AFTER UPDATE OF age ON Owners
+    FOR EACH ROW 
+    EXECUTE FUNCTION change_driving_experience();
+
+SELECT * FROM Owners;
+UPDATE Owners SET age = age + 5;
+SELECT * FROM Owners;
